@@ -1,21 +1,28 @@
 <!DOCTYPE html>
 <html>
 
-<head> 
+<head>
     <link rel="stylesheet" href="style.css">
 </head>
 
-    <body>
-        <h1 id="title">Welcome to Blackjack!</h1>
+<body>
+    <h1 id="title">Welcome to Blackjack!</h1>
 
-        <p id="text-area">Start Game?</p>
+    <p id="text-area">Start Game?</p>
 
-        <button id= "new-game">New Game</button>
-        <button id="hit">Hit</button>
-        <button id="stay">Stay</button>
+    <div>
+        <h4>Player Cards</h4>
+        <div id="playercards"></div>
+        <h4>Dealer's Cards</h4>
+        <div id="dealercards"></div>
+    </div>
 
-        <script src="Blackjack.js"></script>
+    <button id="new-game">New Game</button>
+    <button id="hit">Hit</button>
+    <button id="stay">Stay</button>
 
-    </body>
+    <script src="Blackjack.js"></script>
+
+</body>
 
 </html>
