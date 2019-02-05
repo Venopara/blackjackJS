@@ -10,15 +10,18 @@ const Card = function (suit, rank) {
   this.suit = suit
   this.rank = rank
 
-  this.value = function () {
-    if (this.value === 'A') {
-      return [1, 11]
+  function getRankValue(rank) {
+    if (rank === 'A') {
+      return 11
     }
-    else if (['J', 'Q', 'K'].contains(this.value)) {
+    else if (['J', 'Q', 'K'].includes(rank)) {
       return 10
     }
-    return parseInt(this.value)
-  }()
+    return parseInt(rank)
+  }
+
+  this.value = getRankValue(this.rank)
+
   // Notice the () after the function declaration?
   // This means we declared an anonymous function
   // and then called it, assigned the value returned
@@ -40,7 +43,7 @@ const Card = function (suit, rank) {
 // this doesn't prevent us from changing the values inside the arrays,
 // but it does prevent us from accidentally reassigning a value
 const suits = [ 'hearts', 'clubs', 'diamonds', 'spades' ];
-const ranks = [ 'A', 'K', 'Q', 'J', '10', '9', '8', '7', '6', '5', '4', '3', '2', '1' ];
+const ranks = [ 'A', 'K', 'Q', 'J', '10', '9', '8', '7', '6', '5', '4', '3', '2' ];
 
 
 // Self contained DeckOfCards class.  All functionality is encompassed here.
@@ -104,7 +107,6 @@ const Player = function (name) {
   }
 }
 
-
 const GameOfBlackjack = function () {
   const DEALER = 0
   const PLAYER = 1
@@ -113,7 +115,7 @@ const GameOfBlackjack = function () {
 
   let ui = {
     title: document.getElementById('title'),
-    status: document.getElementById('status'),
+    status: document.querySelector('.status'),
     dealer: document.getElementById('dealer'),
     cards: [
       document.querySelector('#dealer .hand'),
@@ -126,21 +128,29 @@ const GameOfBlackjack = function () {
       newHand: document.getElementById('new-hand-button')
     },
     endHand(winOrLose, message) {
+
+      message = message || ''
       if (message) message += ' '
-      ui.status.innerHTML = `${message}You ${winOrLose}!`
+      ui.setStatus(`${message}You ${winOrLose}!`, winOrLose)
+
+      ui.dealer.classList.remove('hide-first-card')
       ui.buttons.newHand.classList.remove('hidden')
       ui.buttons.hit.classList.add('hidden')
       ui.buttons.stay.classList.add('hidden')
     },
     startHand() {
-      ui.status.innerHTML = ''
+      ui.setStatus('')
+      ui.cards[0].innerHTML = ''
+      ui.cards[1].innerHTML = ''
       ui.dealer.classList.add('hide-first-card')
       ui.buttons.newHand.classList.add('hidden')
       ui.buttons.hit.classList.remove('hidden')
       ui.buttons.stay.classList.remove('hidden')
     },
-    setStatus(status) {
-      ui.status.innerHTML = status
+    setStatus(message, style) {
+      style = style || ''
+      ui.status.className = 'status ' + style.toLowerCase()
+      ui.status.innerHTML = message
     }
   }
 
@@ -151,15 +161,21 @@ const GameOfBlackjack = function () {
 
   function renderCard(card) {
     let ele = document.createElement('div')
-    ele.className = 'card'
-    ele.classList = [ 'card', card.suit ]
-    ele.innerHTML = card.rank
+    ele.className = 'card ' + card.suit
+    // ele.classList = [ 'card', card.suit ]
+    let rankEle = document.createElement('div')
+    rankEle.className = 'rank'
+    rankEle.innerHTML = card.rank
+    ele.appendChild(rankEle)
 
     return ele
   }
 
   function hit(playerIndex) {
     let card = deck.dealCard()
+    if (!card) {
+
+    }
     players[playerIndex].hand.push(card)
     ui.cards[playerIndex].appendChild(renderCard(card))
   }
@@ -176,8 +192,10 @@ const GameOfBlackjack = function () {
 
     if (dealerScore > 21) {
       ui.endHand('WIN', 'Dealer BUSTED!')
-    } else if (dealerScore >= playerScore) {
+    } else if (dealerScore > playerScore) {
       ui.endHand('LOSE')
+    } else if (dealerScore === playerScore) {
+      ui.endHand('PUSH', 'Tie Score!')
     } else {
       ui.endHand('WIN')
     }
@@ -185,6 +203,8 @@ const GameOfBlackjack = function () {
 
   function dealNewHand() {
     ui.startHand()
+    players[DEALER].hand = []
+    players[PLAYER].hand = []
 
     hit(DEALER)
     hit(PLAYER)
@@ -203,9 +223,9 @@ const GameOfBlackjack = function () {
     }
   }
 
-  ui.buttons.newGame.addEventListener('click', function (e) {
+  // ui.buttons.newGame.addEventListener('click', function (e) {
 
-  })
+  // })
 
   ui.buttons.hit.addEventListener('click', function (e) {
     hit(PLAYER)
@@ -214,37 +234,17 @@ const GameOfBlackjack = function () {
       // Busted!
       ui.endHand('LOSE', 'BUSTED!')
     } else if (playerScore == 21) {
-
+      stay()
     }
   })
 
-  ui.buttons.stay.addEventListener('click', function (e) {
-
-    ui.buttons.hit.classList.add('hidden')
-    ui.buttons.stay.classList.add('hidden')
-    ui.dealer.classList.remove('hide-first-card')
-
-    while (players[DEALER].handValue() < 17) {
-      hit(DEALER)
-    }
-
-    let dealerScore = players[DEALER].handValue()
-    let playerScore = players[PLAYER].handValue()
-
-    if (dealerScore > 21) {
-      us.setStatus('Dealer BUSTED - You WIN!')
-    } else if (dealerScore >= playerScore) {
-      us.setStatus('You LOSE!')
-    } else {
-      us.setStatus('You WIN!')
-    }
-    ui.buttons.newHand.classList.remove('hidden')
-  })
+  ui.buttons.stay.addEventListener('click', stay)
 
   ui.buttons.newHand.addEventListener('click', function (e) {
     dealNewHand()
   })
 
+  deck.shuffle()
   dealNewHand()
 }
 

@@ -11,37 +11,40 @@
 
     <!-- <button id="new-game-button" class="button">New Game</button> -->
 
-    <p id="status"></p>
 
     <div class="blackjack-game hiddenz">
       <div class="players">
         <div id="dealer" class="player">
           <h4>Dealer</h4>
-          <div class="hand"></div>
+          <div class="hand">
+
+          </div>
         </div>
         <div id="player" class="player">
           <h4>Player</h4>
           <div class="hand">
             <div class="card hearts">
-              10
+              <div class="rank">10</div>
             </div>
             <div class="card spades">
-              10
+              <div class="rank">J</div>
             </div>
             <div class="card diamonds">
-              10
+              <div class="rank">Q</div>
             </div>
             <div class="card clubs">
-              10
+              <div class="rank">K</div>
             </div>
           </div>
         </div>
       </div>
 
+      <p class="status"></p>
+
       <div class="blackjack-buttons">
-        <button id="hit-button" class="button">Hit</button>
-        <button id="stay-button" class="button">Stay</button>
-        <button id="new-hand-button" class="button hidden">Stay</button>
+        <button id="hit-button" class="wide">Hit</button>
+        <button id="stay-button" class="wide">Stay</button>
+        <button id="new-hand-button" class="xwide hidden">Deal New Hand</button>
       </div>
     </div>
 
