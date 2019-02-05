@@ -1,0 +1,44 @@
+
+.hidden {
+  display: none;
+}
+.card {
+  position: relative;
+  display: inline-block;
+  height: 155px;
+  width: 80px;
+  border: 1px solid black;
+  border-radius: 6px;
+  font-size: 30px;
+  line-height: 30px;
+  font-weight: bold;
+  text-align: right;
+  padding: 10px;
+}
+
+.card:before {
+  position: absolute;
+  top: 48px;
+  left: 15px;
+  height: 78px;
+  width: 80px;
+  background: url(suits.png);
+  background-repeat: no-repeat;
+  content: " ";
+}
+
+.card.hearts:before {
+  background-position: -90px 0;
+}
+
+.card.spades {
+  background-position: 0 0;
+}
+
+.card.clubs:before {
+  background-position: -90px -83px;
+}
+
+.card.diamonds:before {
+  background-position: 0 -83px;
+}
