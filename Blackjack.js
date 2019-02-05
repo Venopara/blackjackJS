@@ -1,5 +1,5 @@
 // JavaScript source code
-//Blackjack
+// Blackjack
 // By Tristen Throckmorton
 // Updated by Aaron Throckmorton
 
