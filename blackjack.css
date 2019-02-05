@@ -1,0 +1,105 @@
+
+.hidden {
+  display: none !important;
+}
+
+.status {
+  font-size: 20px;
+  min-height: 23px;
+  padding: 10px;
+  border-radius: 6px;
+}
+
+.status.win {
+  background-color: green;
+  color: white;
+}
+
+button {
+  padding: 4px 8px;
+  border-radius: 4px;
+  background-color: white;
+  border: 1px solid black;
+  font-size: 1.5em;
+  font-weight: bold;
+
+}
+
+button.wide {
+  min-width: 107px;
+}
+
+button.xwide {
+  min-width: 214px;
+}
+
+.status.lose {
+  background-color: red;
+  color: white;
+}
+
+.hand {
+  min-height: 195px;
+}
+
+.card {
+  position: relative;
+  display: inline-block;
+  height: 155px;
+  width: 80px;
+  border: 3px solid black;
+  border-radius: 6px;
+  font-size: 30px;
+  line-height: 30px;
+  font-weight: bold;
+  text-align: right;
+  padding: 10px;
+  margin: 0 6px 8px 0;
+}
+
+.card:before {
+  position: absolute;
+  top: 48px;
+  left: 15px;
+  height: 78px;
+  width: 80px;
+  background: url(suits.png);
+  background-repeat: no-repeat;
+  content: " ";
+}
+
+.card.hearts:before {
+  background-position: -90px 0;
+}
+
+.card.spades {
+  background-position: 0 0;
+}
+
+.card.clubs:before {
+  background-position: -90px -83px;
+}
+
+.card.diamonds:before {
+  background-position: 0 -83px;
+}
+
+.rank {
+  position: absolute;
+  top: 6px;
+  right: 6px;
+}
+
+.hide-first-card .hand .card:first-child {
+  background-image: linear-gradient(to bottom right, red, yellow);
+  /* font-size: 1px; */
+}
+
+.hide-first-card .hand .card:first-child .rank {
+  display: none;
+}
+
+.hide-first-card .hand .card:first-child:before {
+  display: none;
+  color: transparent;
+}
