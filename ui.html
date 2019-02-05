@@ -8,18 +8,28 @@
 <body>
     <h1 id="title">Welcome to Blackjack!</h1>
 
-    <p id="text-area">Start Game?</p>
+    <button id="new-game-button" class="button">New Game</button>
 
-    <div>
-        <h4>Player Cards</h4>
-        <div id="playercards"></div>
-        <h4>Dealer's Cards</h4>
-        <div id="dealercards"></div>
+    <p id="status"></p>
+
+    <div class="blackjack-game hidden">
+      <div class="players">
+        <div id="dealer" class="player">
+          <h4>Dealer</h4>
+          <div class="hand"></div>
+        </div>
+        <div id="player" class="player">
+          <h4>Player</h4>
+          <div class="hand"></div>
+        </div>
+      </div>
+
+      <div class="blackjack-buttons">
+        <button id="hit-button" class="button">Hit</button>
+        <button id="stay-button" class="button">Stay</button>
+        <button id="new-hand-button" class="button hidden">Stay</button>
+      </div>
     </div>
-
-    <button id="new-game">New Game</button>
-    <button id="hit">Hit</button>
-    <button id="stay">Stay</button>
 
     <script src="Blackjack.js"></script>
 
